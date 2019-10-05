@@ -80,8 +80,8 @@ public class IDConverter {
     /**
      * Converting ID base10 to base62.
      *
-     * @param dividend ID.
-     * @return Base62 ID.
+     * @param dividend ID
+     * @return Base62 ID
      */
     public List<Integer> convertIDToBase62(Optional<Integer> dividend) {
 
@@ -97,6 +97,12 @@ public class IDConverter {
         return remainder;
     }
 
+    /**
+     * Creating unique ID.
+     *
+     * @param id Used to get convert to Base62
+     * @return UniqueURLID
+     */
     public String createUniqueID(Optional<Integer> id) {
 
         List<Integer> base62ID = convertIDToBase62(id);
