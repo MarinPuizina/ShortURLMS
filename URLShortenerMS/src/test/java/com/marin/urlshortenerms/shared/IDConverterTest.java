@@ -21,7 +21,7 @@ class IDConverterTest {
     @Test
     void shouldBeAbleToDivideTwoNumbers() {
 
-        Optional<Integer> number = Optional.of(62);
+        Optional<Long> number = Optional.of(62L);
 
         List<Integer> returnValue = idConverter.convertIDToBase62(number);
 
@@ -33,7 +33,7 @@ class IDConverterTest {
     void shouldStoreReminderIntoArrayList() {
 
         List<Integer> testList = new ArrayList<>();
-        Optional<Integer> number = Optional.of(125);
+        Optional<Long> number = Optional.of(125L);
 
         List<Integer> returnValue = idConverter.convertIDToBase62(number);
 
@@ -67,7 +67,7 @@ class IDConverterTest {
     @Test
     void shouldCreateUniqueURLID() {
 
-        String returnValue = idConverter.createUniqueID(Optional.of(125));
+        String returnValue = idConverter.createUniqueID(Optional.of(125L));
 
         assertNotNull("cb", returnValue);
 
@@ -76,7 +76,7 @@ class IDConverterTest {
     @Test
     void uniqueURLIDShouldBeReversed() {
 
-        String returnValue = idConverter.createUniqueID(Optional.of(125));
+        String returnValue = idConverter.createUniqueID(Optional.of(125L));
 
         assertNotNull("cb", returnValue);
 

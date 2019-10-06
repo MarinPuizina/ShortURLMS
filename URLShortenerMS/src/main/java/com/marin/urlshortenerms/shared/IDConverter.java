@@ -83,14 +83,14 @@ public class IDConverter {
      * @param dividend ID
      * @return Base62 ID
      */
-    public List<Integer> convertIDToBase62(Optional<Integer> dividend) {
+    public List<Integer> convertIDToBase62(Optional<Long> dividend) {
 
         List<Integer> remainder = new LinkedList<>();
 
-        while (dividend.orElse(0) > 0) {
+        while (dividend.orElse(0L) > 0) {
 
-            remainder.add(dividend.orElse(0) % 62);
-            dividend = Optional.of(dividend.orElse(0) / 62);
+            remainder.add( (int)(dividend.orElse(0L) % 62) );
+            dividend = Optional.of(dividend.orElse(0L) / 62);
 
         }
 
@@ -103,7 +103,7 @@ public class IDConverter {
      * @param id Used to get convert to Base62
      * @return UniqueURLID
      */
-    public String createUniqueID(Optional<Integer> id) {
+    public String createUniqueID(Optional<Long> id) {
 
         List<Integer> base62ID = convertIDToBase62(id);
         StringBuilder uniqueURLID = new StringBuilder();

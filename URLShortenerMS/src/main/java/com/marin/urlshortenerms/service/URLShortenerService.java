@@ -12,6 +12,8 @@ import java.util.Optional;
 @Slf4j
 public class URLShortenerService {
 
+    private final String IDTRACKER = "*IDTRACKER*";
+
     @Autowired
     IDConverter idConverter;
 
@@ -23,10 +25,28 @@ public class URLShortenerService {
         this.jedis = jedis;
     }
 
+    public void createIDTrackerRedis() {
+        if(jedis.get(IDTRACKER) == null || jedis.get(IDTRACKER).isEmpty()) {
+            jedis.set(IDTRACKER, "0");
+        }
+    }
+
+    public void storeIncrementedIDTracker() {
+
+        Long idTracker = getStoredIDTracker() + 1L;
+
+        jedis.set(IDTRACKER, String.valueOf(idTracker));
+        log.info("Storing IDTracker on key: {}, with value: {}", IDTRACKER, idTracker);
+
+    }
+
+    public Long getStoredIDTracker() {
+        return Long.parseLong(jedis.get(IDTRACKER));
+    }
 
     public void storeUniqueIDAndSourceURL(String uniqueID, Optional<String> sourceURL) {
 
-        log.info("Storing uniqueID: {} , sourceURL: {}", uniqueID, sourceURL.get());
+        //log.info("Storing uniqueID: {} , sourceURL: {}", uniqueID, sourceURL.get());
 
         if (!sourceURL.orElse("0").equals("0") ) {
             jedis.set(uniqueID, sourceURL.get());
@@ -36,7 +56,7 @@ public class URLShortenerService {
 
     public String createShortenURL(String uniqueID) {
 
-        log.info("Creating shorten URL: www.shorty.com/{}", uniqueID);
+        //log.info("Creating shorten URL: www.shorty.com/{}", uniqueID);
 
         return "www.shorty.com/" + uniqueID;
     }
