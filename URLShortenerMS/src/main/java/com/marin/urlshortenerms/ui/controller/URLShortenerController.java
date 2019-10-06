@@ -26,6 +26,7 @@ public class URLShortenerController {
 
     /**
      * POST REQUEST: localhost:8080/url/shorten
+     * Zuul Gateway: localhost:8011/urlshortener-ms/url/shorten
      */
     @PostMapping(value = "/url/shorten",
                 consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
@@ -36,7 +37,6 @@ public class URLShortenerController {
         urlShortenerService.storeIncrementedIDTracker();
 
         String uniqueID = idConverter.createUniqueID(Optional.of(urlShortenerService.getStoredIDTracker()));
-
         urlShortenerService.storeUniqueIDAndSourceURL(uniqueID, Optional.of( requestModel.getSourceURL()));
 
         CreateShortURLResponseModel responseModel = new CreateShortURLResponseModel();
