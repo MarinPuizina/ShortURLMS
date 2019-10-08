@@ -1,11 +1,14 @@
 package com.marin.urlshortenerms.service;
 
+import com.marin.urlshortenerms.Exception.ErrorMessages;
+import com.marin.urlshortenerms.Exception.Exceptions.URLShortenerServiceException;
 import com.marin.urlshortenerms.shared.IDConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
+import java.net.ConnectException;
 import java.util.Optional;
 
 import static com.marin.urlshortenerms.shared.URLShortenerConstants.ID_TRACKER;
@@ -31,8 +34,12 @@ public class URLShortenerService {
      * Creates ID Tracker key with value in database.
      */
     public void createIDTrackerRedis() {
-        if(jedis.get(ID_TRACKER) == null || jedis.get(ID_TRACKER).isEmpty()) {
-            jedis.set(ID_TRACKER, "0");
+        try {
+            if(jedis.get(ID_TRACKER) == null || jedis.get(ID_TRACKER).isEmpty()) {
+                jedis.set(ID_TRACKER, "0");
+            }
+        } catch (Exception e) {
+            throw new URLShortenerServiceException(ErrorMessages.DATABASE_CONNECTION_ISSUE.getErrorMessage());
         }
     }
 
