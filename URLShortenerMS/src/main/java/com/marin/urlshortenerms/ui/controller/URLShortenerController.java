@@ -10,11 +10,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@RestController //localhost:8080
+@RestController
+@RequestMapping("/url") //localhost:8080/url
 public class URLShortenerController {
 
     @Autowired
@@ -28,7 +30,7 @@ public class URLShortenerController {
      * POST REQUEST: localhost:8080/url/shorten
      * Zuul Gateway: localhost:8011/urlshortener-ms/url/shorten
      */
-    @PostMapping(value = "/url/shorten",
+    @PostMapping(value = "/shorten",
                 consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
                 produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<CreateShortURLResponseModel> createShortURL(@RequestBody CreateShortURLRequestModel requestModel) {
