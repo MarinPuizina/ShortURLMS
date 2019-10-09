@@ -1,8 +1,10 @@
 package com.marin.usersms.ui.controller;
 
-import com.marin.usersms.ui.entity.UserEntity;
+import com.marin.usersms.service.UserService;
+import com.marin.usersms.shared.UserDto;
 import com.marin.usersms.ui.model.CreateUserRequestModel;
-import com.marin.usersms.ui.repository.UsersRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +15,8 @@ import javax.validation.Valid;
 public class UsersController {
 
     @Autowired
-    UsersRepository usersRepository;
+    UserService userService;
+
 
     @GetMapping("/status")
     public String status() {
@@ -23,14 +26,11 @@ public class UsersController {
     @PostMapping
     public String createUser(@Valid @RequestBody CreateUserRequestModel userModel) {
 
-        UserEntity returnModel = new UserEntity();
-        returnModel.setFirstName("Marin");
-        returnModel.setLastName("Puizina");
-        returnModel.setEmail("marin@gmail.com");
-        returnModel.setUserId("marin123");
-        returnModel.setEncryptedPassword("ma#2323$3$o23dd");
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        usersRepository.save(returnModel);
+        UserDto userDto = modelMapper.map(userModel, UserDto.class);
+        userService.createUser(userDto);
 
         return "CREATE USER WORKING";
     }

@@ -1,4 +1,4 @@
-package com.marin.usersms.ui.entity;
+package com.marin.usersms.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String lastName;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 120, unique = true)
     private String email;
 
     @Column(nullable = false, unique = true)

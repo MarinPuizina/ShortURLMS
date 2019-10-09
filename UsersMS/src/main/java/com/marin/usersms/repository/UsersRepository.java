@@ -1,6 +1,6 @@
-package com.marin.usersms.ui.repository;
+package com.marin.usersms.repository;
 
-import com.marin.usersms.ui.entity.UserEntity;
+import com.marin.usersms.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UsersRepository extends CrudRepository<UserEntity, Long> {
