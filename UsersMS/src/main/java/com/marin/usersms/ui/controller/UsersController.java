@@ -2,10 +2,13 @@ package com.marin.usersms.ui.controller;
 
 import com.marin.usersms.service.UserService;
 import com.marin.usersms.shared.UserDto;
-import com.marin.usersms.ui.model.CreateUserRequestModel;
+import com.marin.usersms.ui.model.request.CreateUserRequestModel;
+import com.marin.usersms.ui.model.response.CreateUserResponseModel;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,15 +27,17 @@ public class UsersController {
     }
 
     @PostMapping
-    public String createUser(@Valid @RequestBody CreateUserRequestModel userModel) {
+    public ResponseEntity<CreateUserResponseModel> createUser(@Valid @RequestBody CreateUserRequestModel userModel) {
 
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         UserDto userDto = modelMapper.map(userModel, UserDto.class);
-        userService.createUser(userDto);
+        UserDto updatedModel = userService.createUser(userDto);
 
-        return "CREATE USER WORKING";
+        CreateUserResponseModel responseModel = modelMapper.map(updatedModel, CreateUserResponseModel.class);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseModel);
     }
 
 }

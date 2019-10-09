@@ -1,4 +1,4 @@
-package com.marin.usersms.ui.model;
+package com.marin.usersms.ui.model.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
