@@ -1,16 +1,23 @@
 package com.marin.usersms.ui.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.marin.usersms.ui.model.CreateUserRequestModel;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
 public class UsersController {
 
-    @GetMapping
+    @GetMapping("/status")
     public String status() {
         return "Users Microservice is working.";
+    }
+
+    @PostMapping
+    public String createUser(@Valid @RequestBody CreateUserRequestModel userModel) {
+
+        return "CREATE USER WORKING";
     }
 
 }
