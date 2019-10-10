@@ -3,6 +3,7 @@ package com.marin.usersms.security;
 import com.marin.usersms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,11 +16,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     UserService userService;
     BCryptPasswordEncoder passwordEncoder;
+    Environment environment;
 
     @Autowired
-    public WebSecurity(UserService userService, BCryptPasswordEncoder passwordEncoder) {
+    public WebSecurity(UserService userService, BCryptPasswordEncoder passwordEncoder, Environment environment) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.environment = environment;
     }
 
     @Override
@@ -33,8 +36,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
 
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(authenticationManager());
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(userService, environment, authenticationManager());
 
         return authenticationFilter;
     }
