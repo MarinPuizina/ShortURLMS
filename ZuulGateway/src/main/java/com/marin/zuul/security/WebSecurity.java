@@ -32,6 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, environment.getProperty("users-ms.registration.url.path")).permitAll()
                 .antMatchers(HttpMethod.POST, environment.getProperty("users-ms.login.url.path")).permitAll()
+                .antMatchers(HttpMethod.POST, environment.getProperty("urlshortener-ms.url.shorten.path")).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthorizationFilter(authenticationManager(), environment));
