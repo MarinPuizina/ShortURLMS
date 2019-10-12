@@ -15,7 +15,7 @@
 	<description>Users Microservice</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>12</java.version>
 		<spring-cloud.version>Greenwich.SR3</spring-cloud.version>
 	</properties>
 
