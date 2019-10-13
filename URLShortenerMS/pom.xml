@@ -78,6 +78,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Uncomment to be able to run mvn package -->
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-commons</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
