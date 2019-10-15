@@ -4,7 +4,7 @@
 * This project has two **microservices**: URLShortenerMS and UsersMS.   
 * It also has **Eureka Discovery Service** and **Zuul** with **load balancer**.
 * Each microservice has a **Dockerfile** used to build images.
-* Also added **docker-compose.yml** file
+* Added **docker-compose.yml** file
 
 ______________________________________________________________________
 
