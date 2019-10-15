@@ -1,0 +1,16 @@
+version: '3'
+services:
+    discovery:
+        build: ShortURLDiscoveryService
+        environment: 
+            - "eureka.client.serviceUrl.defaultZone=http://discovery:8010/eureka/"
+        ports:
+            - "8010:8010"
+    zuul:
+        build: ZuulGateway
+        environment: 
+            - "eureka.client.serviceUrl.defaultZone=http://discovery:8010/eureka/"
+        ports:
+            - "8011:8011"
+        depends_on:
+            - discovery
