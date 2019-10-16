@@ -14,3 +14,21 @@ services:
             - "8011:8011"
         depends_on:
             - discovery
+    postgresql:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: root
+            POSTGRES_USER: postgres
+            POSTGRES_DB: test
+        ports:
+            - "5432:5432"
+        volumes:
+            - /var/lib/postgresql/data
+    users:
+        build: UsersMS
+        environment:
+            - "eureka.client.serviceUrl.defaultZone=http://discovery:8010/eureka/"
+        depends_on:
+            - discovery
+            - postgresql
