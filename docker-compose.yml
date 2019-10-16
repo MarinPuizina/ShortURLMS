@@ -2,12 +2,14 @@ version: '3'
 services:
     discovery:
         build: ShortURLDiscoveryService
+        container_name: discovery
         environment: 
             - "eureka.client.serviceUrl.defaultZone=http://discovery:8010/eureka/"
         ports:
             - "8010:8010"
     zuul:
         build: ZuulGateway
+        container_name: zuul
         environment: 
             - "eureka.client.serviceUrl.defaultZone=http://discovery:8010/eureka/"
         ports:
@@ -16,6 +18,7 @@ services:
             - discovery
     postgresql:
         image: postgres
+        container_name: postgresql
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: root
@@ -26,12 +29,30 @@ services:
             - pgdata:/var/lib/postgresql/data
     users:
         build: UsersMS
+        container_name: users-microservice
         environment:
             - "eureka.client.serviceUrl.defaultZone=http://discovery:8010/eureka/"
             - "spring.datasource.url=jdbc:postgresql://postgresql:5432/test"
         depends_on:
             - discovery
             - postgresql
+    redis:
+        image: redis
+        container_name: redis
+        volumes:
+            - redis-data:/data
+        ports:
+            - "6379:6379"
+    url-shortener:
+        build: URLShortenerMS
+        container_name: url-shortener-microservice
+        environment:
+            - "eureka.client.serviceUrl.defaultZone=http://discovery:8010/eureka/"
+            - "redis.config.hostname=redis"
+        depends_on:
+            - discovery
+            - redis
 #Added for PostgreSQL as the only known fix for Windows
 volumes:
     pgdata:
+    redis-data:
