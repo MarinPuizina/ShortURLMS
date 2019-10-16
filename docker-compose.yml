@@ -39,6 +39,7 @@ services:
     redis:
         image: redis
         container_name: redis
+        restart: always
         volumes:
             - redis-data:/data
         ports:
