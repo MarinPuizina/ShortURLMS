@@ -94,4 +94,19 @@ public class URLShortenerService {
         return SHORT_URL + uniqueID;
     }
 
+    /**
+     * Returns originalURL stored in database.
+     *
+     * @param uniqueId Used to get unique ID to find originalURL in database.
+     * @return original URL.
+     */
+    public String getOriginalURL(String uniqueId) {
+
+        if (uniqueId != null || !uniqueId.isEmpty()) {
+            return jedis.get(uniqueId);
+        }
+
+        return null;
+    }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class URLShortenerController {
     @Autowired
     URLShortenerService urlShortenerService;
 
-    @GetMapping("status")
+    @GetMapping("/status")
     public String getStatus() {
         return "URL shortener microservice is working!";
     }
@@ -46,6 +47,21 @@ public class URLShortenerController {
         responseModel.setShortenURL(urlShortenerService.createShortenURL(uniqueID));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseModel);
+    }
+
+    @GetMapping("/redirect/{uniqueId}")
+    public RedirectView redirectUrl(@PathVariable String uniqueId) {
+
+        String originalURL = urlShortenerService.getOriginalURL(uniqueId);
+
+        if (originalURL!= null){
+
+            RedirectView redirectView = new RedirectView(originalURL);
+
+            return redirectView;
+        }
+
+        return new RedirectView("https://longeatonroundtable.files.wordpress.com/2017/09/file-not-found.jpg");
     }
 
 }
