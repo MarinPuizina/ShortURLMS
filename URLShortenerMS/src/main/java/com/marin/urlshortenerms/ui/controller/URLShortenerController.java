@@ -49,6 +49,10 @@ public class URLShortenerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseModel);
     }
 
+    /**
+     * GET REQUEST: localhost:8080/url/redirect/{uniqueId}
+     * Zuul Gateway: localhost:8011/urlshortener-ms/url/redirect/{uniqueId}
+     */
     @GetMapping("/redirect/{uniqueId}")
     public RedirectView redirectUrl(@PathVariable String uniqueId) {
 
