@@ -12,7 +12,7 @@ ______________________________________________________________________
 
 * For data persistence I am using **Redis** database.
 * It has scalable algorithm for creating shorten URLs.
-* It has two REST APIs:   
+* It has two **REST APIs**:   
                       <pre>1) Shorten URL   
                       2) Redirect</pre>
 
